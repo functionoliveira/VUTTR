@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-export default function DelTools() {
+// import api
+import { instanceToolsAPI } from '../api/main';
+
+export default function DelTools(props) {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+    const handleDelete = () => {
+      instanceToolsAPI.remove(props.id)
+        .then(resp => { 
+          if(resp.status === 200)
+            setShow(false)
+          else
+            throw resp;
+        })
+        .catch(err => { console.log(err); })
+    }
+
     return (
       <>
         <Button variant="danger" onClick={handleShow}>
@@ -24,7 +37,7 @@ export default function DelTools() {
             <Button variant="secondary" onClick={handleClose}>
               Não
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleDelete}>
               Sim
             </Button>
           </Modal.Footer>

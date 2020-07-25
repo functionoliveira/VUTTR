@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
+
+// import dos componentes do bootstrap
 import { Form } from 'react-bootstrap';
+// import api
+import { instanceToolsAPI } from '../api/main';
 
+const FormAddTools = forwardRef((props, ref) => {
+    const [form, setForm] = useState({ 
+        title       : '', 
+        link        : '', 
+        description : '',
+        tags        : ''
+    });
 
-export default function AddTools() {
+    function handleInputChange(e) {
+        const {name, value} = e.target;
+        setForm({...form, [name]: value});
+    }
+
+    useImperativeHandle(ref, () => ({
+        onSubmit() {
+            console.log(form);
+            return instanceToolsAPI.create(form);
+        }
+    }));
+
     return (
         <Form>
             <Form.Group controlId="formToolName">
                 <Form.Label>Nome da ferramenta</Form.Label>
-                <Form.Control type="text" placeholder="Informe o nome" />
+                <Form.Control name="title" value={form.title} onChange={handleInputChange} type="text" placeholder="Informe o nome" />
                 <Form.Text className="text-muted">
                     Aqui você informa o nome da ferramente que deseja adicionar.
                 </Form.Text>
@@ -15,7 +37,7 @@ export default function AddTools() {
 
             <Form.Group controlId="formToolLink">
                 <Form.Label>Link de referência</Form.Label>
-                <Form.Control type="url" placeholder="Informe o link" />
+                <Form.Control name="link" value={form.link} onChange={handleInputChange} type="url" placeholder="Informe o link" />
                 <Form.Text className="text-muted">
                     Aqui você informa o link de acesso a documentação da ferramenta.
                 </Form.Text>
@@ -23,7 +45,7 @@ export default function AddTools() {
 
             <Form.Group controlId="formToolDescription">
                 <Form.Label>Descrição da ferramenta</Form.Label>
-                <Form.Control as="textarea" rows="3" placeholder="Informe a descrição" />
+                <Form.Control name="description" value={form.description} onChange={handleInputChange} as="textarea" rows="3" placeholder="Informe a descrição" />
                 <Form.Text className="text-muted">
                     Aqui você informa o nome da ferramente que deseja adicionar.
                 </Form.Text>
@@ -31,11 +53,13 @@ export default function AddTools() {
 
             <Form.Group controlId="formToolTags">
                 <Form.Label>Tags da ferramenta</Form.Label>
-                <Form.Control type="text" placeholder="Informe as tags" />
+                <Form.Control name="tags" value={form.tags} onChange={handleInputChange} type="text" placeholder="Informe as tags" />
                 <Form.Text className="text-muted">
                     Aqui você informa as tags relacionadas a essa ferramenta.
                 </Form.Text>
             </Form.Group>
         </Form>
     );
-  }
+})
+
+export default FormAddTools;

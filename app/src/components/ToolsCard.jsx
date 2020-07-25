@@ -1,27 +1,34 @@
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
 
+// import dos componentes do bootstrap
+import { Card, Row, Col } from 'react-bootstrap';
 
 // import components
 import DelTools from './DelTools';
 
-export default function ToolsCard() {
+export default function ToolsCard(props) {
     return (
         <Card style={{ width: '100%' }} className="my-4">
             <Card.Body>
                 <Card.Title>
                     <Row>
                         <Col>
-                            <a href="#">Nome da ferramenta</a>
+                            <a 
+                                href={props.tools.link || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                            >{props.tools.title}</a>
                         </Col>
                         <Col md="auto">
-                            <DelTools></DelTools>
+                            <DelTools id={props.tools.id}></DelTools>
                         </Col>
                     </Row>
                 </Card.Title>
                 <Card.Text>
-                    <p>Descrição da ferramenta</p>
-                    <caption style={{width: '100px'}}>Tags</caption>
+                    <span>{props.tools.description}</span>
+                </Card.Text>
+                <Card.Text>
+                    <span>{'#'+props.tools.tags.join('#')}</span>
                 </Card.Text>
             </Card.Body>
         </Card>
