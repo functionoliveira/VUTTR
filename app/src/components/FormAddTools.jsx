@@ -5,7 +5,13 @@ import { Form } from 'react-bootstrap';
 // import api
 import { instanceToolsAPI } from '../api/main';
 
+/**
+ * Componente formulário, responsável por guardar a lógica necessária para se cadastrar 
+ * uma ferramenta.
+*/
 const FormAddTools = forwardRef((props, ref) => {
+    // Guarda as informações do formulário necessárias para o
+    // cadastro de uma ferramenta.
     const [form, setForm] = useState({ 
         title       : '', 
         link        : '', 
@@ -13,14 +19,21 @@ const FormAddTools = forwardRef((props, ref) => {
         tags        : ''
     });
 
+    // Método genérico responsável por atualizar o estado da variável form
+    // conforme digitado no campo input.
     function handleInputChange(e) {
         const {name, value} = e.target;
-        setForm({...form, [name]: value});
+        if(name === 'tags') {
+            setForm({...form, [name]: value.split(' ')});
+        }else{
+            setForm({...form, [name]: value});
+        }
     }
 
+    // Método responsável por disponibilizar os funções internas a ele
+    // para que possam ser utilizadas em componentes pais.
     useImperativeHandle(ref, () => ({
         onSubmit() {
-            console.log(form);
             return instanceToolsAPI.create(form);
         }
     }));

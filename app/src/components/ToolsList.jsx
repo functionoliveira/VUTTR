@@ -8,20 +8,30 @@ import ToolsCard from './ToolsCard';
 // import funções auxiliares
 import { Json2QueryString } from '../helpers';
 
+/**
+ * Componente lista responsável por renderizar as de Ferramentas cadastradas no sistema.
+ * Usa os componentes ToolsListHeader e ToolsCard. 
+*/
 export default class ToolsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+          // lista de ferramentas
           tools: [],
+          // palavra chave de busca
           search: '',
+          // checkbox indicando se a busca deve ser por tags ou titulo
           checkbox: false
         };
     }
 
+    // Método responsável por alterar o estado da variavel checkbox
     handleCheckbox(e) {
         this.setState({...this.state, checkbox: e.target.checked});
     }
 
+    // Método responsável por alterar o estado da variavel search,
+    // atualizar o query string da url e realizar a busca.
     handleInputChange(e) {
         this.setState({...this.state, search: e.target.value});
         let query;
@@ -45,6 +55,8 @@ export default class ToolsList extends React.Component {
 
     }
 
+    // Método disparado após o componente ser montado.
+    // Realiza a listagem das ferramentas e armazena na variável tools
     componentDidMount() {
         instanceToolsAPI
             .list()

@@ -6,6 +6,10 @@ import { Card, Row, Col } from 'react-bootstrap';
 // import components
 import DelTools from './DelTools';
 
+/**
+ * Componente card usado para renderizar as informações de uma Ferramenta.
+ * É necessário informar: id, title, link, description e tags.
+*/
 export default function ToolsCard(props) {
     return (
         <Card style={{ width: '100%' }} className="my-4">

@@ -12,6 +12,15 @@ import {
 // import components
 import AddTools from './AddTools';
 
+/**
+ * Componente superior da lista, responsável por gerenciar os inputs de busca e checkbox
+ * e executar o método handleInputChange passado pelo pai sempre que um evento onChange
+ * do input for disparado.
+ * @param handleInputChange - método disparado ao digitar no input de busca.
+ * @param handleCheckbox - método disparado ao marcar ou desmarcar o checkbox.
+ * @param search - valor da variável de busca.
+ * @param checkbox - valor da variável de checkbox.
+*/
 export default function ToolsListHeader(props) {
     return (
         <Container>

@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-
 // import api
 import { instanceToolsAPI } from '../api/main';
 
+/**
+ * Componente modal responsável por confirmar a ação e remover uma Ferramenta.
+*/
 export default function DelTools(props) {
+    // Guarda o status da modal. True quando estiver aberta e False quando fechada.
     const [show, setShow] = useState(false);
-  
+
+    // Método disparado para fechar a modal
     const handleClose = () => setShow(false);
+    // Método disparado para abrir a modal
     const handleShow = () => setShow(true);
+    // Método disparado ao realçar a vontade de remover.
+    // Realiza uma chamada ao backend enviando o ID da ferramenta.
     const handleDelete = () => {
       instanceToolsAPI.remove(props.id)
         .then(resp => { 

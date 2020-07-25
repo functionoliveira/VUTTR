@@ -5,29 +5,40 @@ import { Button, Modal } from 'react-bootstrap';
 // import components
 import FormAddTools from './FormAddTools';
 
+/**
+ * Componente modal responsável por adicionar novas ferramentas.
+*/
 export default function AddTools() {
+    // Guarda o status da modal. True quando estiver aberta e False quando fechada.
     const [show, setShow] = useState(false);
+    // Guarda a referência do componente Formulário
     const formRef = useRef(null);
-  
+    
+    // Método disparado para fechar a modal
     const handleClose = () => setShow(false);
+    // Método disparado para abrir a modal
     const handleShow = () => setShow(true);
+
+    // Método disparado para salvar a nova ferramenta
     const handleSave = () => {
-      formRef.current
-        .onSubmit()
-        .then(response => {
-          if(response.status === 201) {
-            setShow(false); 
-          }else{
-            throw response;
-          }
-        })
-        .catch(error => {
-          if(error.response) {
-            console.log(error.response);
-          }else {
-            console.log(error);
-          }
-        });
+        // Utiliza a referẽncia de componente para invocar a função 
+        // interna que realiza a requisição e devolve uma Promise
+        formRef.current
+            .onSubmit()
+            .then(response => {
+                if(response.status === 201) {
+                    setShow(false); 
+                }else{
+                    throw response;
+                }
+            })
+            .catch(error => {
+                if(error.response) {
+                    console.log(error.response);
+                }else {
+                    console.log(error);
+                }
+            });
     }
 
     return (
@@ -54,4 +65,4 @@ export default function AddTools() {
         </Modal>
       </>
     );
-  }
+}
