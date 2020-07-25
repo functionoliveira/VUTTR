@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
-
+import { connect } from 'react-redux';
 // import dos componentes do bootstrap
 import { Button, Modal } from 'react-bootstrap';
 // import components
 import FormAddTools from './FormAddTools';
-
+// import actions
+import { addToolsList } from '../store/actions/tools.action';
 /**
  * Componente modal responsável por adicionar novas ferramentas.
 */
-export default function AddTools() {
+function AddTools(props) {
     // Guarda o status da modal. True quando estiver aberta e False quando fechada.
     const [show, setShow] = useState(false);
     // Guarda a referência do componente Formulário
@@ -27,6 +28,7 @@ export default function AddTools() {
             .onSubmit()
             .then(response => {
                 if(response.status === 201) {
+                    props.addToolsToList(response.data);
                     setShow(false); 
                 }else{
                     throw response;
@@ -66,3 +68,17 @@ export default function AddTools() {
       </>
     );
 }
+
+const mapStateToProps = state => ({
+  tools: state.tools
+});
+
+const mapActionsCreatorsToProps = dispatch => ({
+  addToolsToList(tools) {
+      // actions creator -> action
+      const action = addToolsList(tools);
+      dispatch(action);
+  }
+});
+
+export default connect(mapStateToProps, mapActionsCreatorsToProps)(AddTools);

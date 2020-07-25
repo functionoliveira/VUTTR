@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 // import api
 import { instanceToolsAPI } from '../api/main';
 // import components
@@ -7,17 +7,17 @@ import ToolsListHeader from './ToolsListHeader';
 import ToolsCard from './ToolsCard';
 // import funções auxiliares
 import { Json2QueryString } from '../helpers';
+// import actions
+import { refreshToolsList } from '../store/actions/tools.action';
 
 /**
  * Componente lista responsável por renderizar as de Ferramentas cadastradas no sistema.
  * Usa os componentes ToolsListHeader e ToolsCard. 
 */
-export default class ToolsList extends React.Component {
+class ToolsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          // lista de ferramentas
-          tools: [],
           // palavra chave de busca
           search: '',
           // checkbox indicando se a busca deve ser por tags ou titulo
@@ -61,7 +61,9 @@ export default class ToolsList extends React.Component {
         instanceToolsAPI
             .list()
             .then(response => {
-                this.setState({...this.state, tools : response.data});
+                if(response.status === 200) {
+                    this.props.initToolsList(response.data);
+                }
             });
     }
     
@@ -77,7 +79,7 @@ export default class ToolsList extends React.Component {
                     ></ToolsListHeader>
                 </div>
                 <div>
-                {this.state.tools.map((item, index) => (
+                {this.props.tools.map((item, index) => (
                     <ToolsCard key={index} tools={item}></ToolsCard>
                 ))}
                 </div>
@@ -85,3 +87,20 @@ export default class ToolsList extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    tools: state.tools
+});
+
+const mapActionsCreatorsToProps = dispatch => ({
+    initToolsList(tools) {
+        // actions creator -> action
+        const action = refreshToolsList(tools);
+        dispatch(action);
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapActionsCreatorsToProps
+)(ToolsList);

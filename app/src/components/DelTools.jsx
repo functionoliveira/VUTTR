@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 // import api
 import { instanceToolsAPI } from '../api/main';
-
+// import actions
+import { removeToolsList } from '../store/actions/tools.action';
 /**
  * Componente modal responsável por confirmar a ação e remover uma Ferramenta.
 */
-export default function DelTools(props) {
+function DelTools(props) {
     // Guarda o status da modal. True quando estiver aberta e False quando fechada.
     const [show, setShow] = useState(false);
 
@@ -19,10 +21,12 @@ export default function DelTools(props) {
     const handleDelete = () => {
       instanceToolsAPI.remove(props.id)
         .then(resp => { 
-          if(resp.status === 200)
+          if(resp.status === 200){
+            props.removeToolsFromStore(props.id);
             setShow(false)
-          else
+          }else{
             throw resp;
+          }
         })
         .catch(err => { console.log(err); })
     }
@@ -52,3 +56,20 @@ export default function DelTools(props) {
       </>
     );
   }
+
+const mapStateToProps = state => ({
+    tools: state.tools
+});
+
+const mapActionsCreatorsToProps = dispatch => ({
+    removeToolsFromStore(toolsID) {
+        // actions creator -> action
+        const action = removeToolsList(toolsID);
+        dispatch(action);
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapActionsCreatorsToProps
+)(DelTools);
