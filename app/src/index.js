@@ -4,10 +4,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
-import ToolsStore from './store/tools.store';
+import storeConfig from './store/storeConfig.js';
 
 ReactDOM.render(
-  <Provider store={ToolsStore()}>
+  <Provider store={storeConfig()}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

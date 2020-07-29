@@ -3,7 +3,7 @@ import ToolsAPI from './tools/tools.api';
 
 // Cria uma instância da api Axios cuja url base é http://localhost:3000 
 const vuttrAPI = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.REACT_APP_BACKEND_URL,
     headers: { 
         'Content-Type' : 'application/json',
     }

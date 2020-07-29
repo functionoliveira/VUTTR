@@ -81,4 +81,7 @@ const mapActionsCreatorsToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapActionsCreatorsToProps)(AddTools);
+export default connect(
+  mapStateToProps, 
+  mapActionsCreatorsToProps
+)(AddTools);
