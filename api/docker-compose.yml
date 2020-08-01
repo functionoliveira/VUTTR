@@ -13,16 +13,22 @@ services:
       SOCKET_HOST: "http://localhost"
       SOCKET_PORT: 80
       
-    # networks:
-    #   - database
+    networks:
+      - database
 
-#   vuutr-database:
-#     restart: unless-stopped
-#     container_name: vuutr-database
-#     image: postgres:9.6-alpine
-#     networks:
-#       - database
+  vuutr-database:
+    restart: unless-stopped
+    container_name: vuutr-database
+    image: postgres:9.6-alpine
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: teste123
+      POSTGRES_USER: root
+      POSTGRES_DB: vuutr
+    networks:
+      - database
 
-# networks:
-#   database:
-#     driver: bridge
+networks:
+  database:
+    driver: bridge

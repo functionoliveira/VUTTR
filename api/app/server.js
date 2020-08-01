@@ -8,7 +8,7 @@ app.use('/tools', toolsRoute);
 
 // Rota para checkar se o server está de pé
 app.get('/health', function(req, res) {
-  res.send('Ok');
+  res.send('The server is up!');
 });
 
 // Handle erros

@@ -10,4 +10,5 @@ RUN npm ci
 RUN npm install -g pm2
 
 EXPOSE 2020
+EXPOSE 5432
 CMD pm2 start --no-daemon server.js
