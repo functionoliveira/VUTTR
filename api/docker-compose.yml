@@ -12,16 +12,17 @@ services:
     environment:
       SOCKET_HOST: "http://localhost"
       SOCKET_PORT: 80
-      
     networks:
       - database
 
   vuutr-database:
-    restart: unless-stopped
     container_name: vuutr-database
+    restart: unless-stopped
     image: postgres:9.6-alpine
     ports: 
       - 5432:5432
+    volumes:
+      - /home/renatogroffe/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: teste123
       POSTGRES_USER: root

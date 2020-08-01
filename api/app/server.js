@@ -1,6 +1,10 @@
 var app = require('express')();
+var bodyParser = require('body-parser');
 var server = require('http').createServer(app);
 const config = require('./config/config');
+
+// parser do body para json
+app.use(bodyParser.json());
 
 // Rotas das ferramentas
 const toolsRoute = require('./routes/ToolsRoute');
