@@ -21,7 +21,7 @@ function DelTools(props) {
     const handleDelete = () => {
       instanceToolsAPI.remove(props.id)
         .then(resp => { 
-          if(resp.status === 200){
+          if(resp.status === 204){
             props.removeToolsFromStore(props.id);
             setShow(false)
           }else{

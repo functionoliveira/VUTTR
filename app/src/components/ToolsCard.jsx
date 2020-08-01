@@ -32,7 +32,7 @@ export default function ToolsCard(props) {
                     <span>{props.tools.description}</span>
                 </Card.Text>
                 <Card.Text>
-                    <span>{'#'+props.tools.tags.join('#')}</span>
+                    <span>{'#'+props.tools.tags?.join('#')}</span>
                 </Card.Text>
             </Card.Body>
         </Card>

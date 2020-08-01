@@ -22,7 +22,7 @@ ToolsRouter.get('/:id', function(req, res) {
 ToolsRouter.post('/', function(req, res) {
     ToolsService.create(req.body)
         .then(resp => {
-            res.send(resp);
+            res.status(201).send(resp);
         })
         .catch(err => {
             res.send(err);
@@ -33,7 +33,7 @@ ToolsRouter.post('/', function(req, res) {
 ToolsRouter.delete('/:id', function(req, res) {
     ToolsService.remove(req.params.id)
         .then(removed => {
-            res.send(removed);
+            res.status(204).send(removed);
         })
         .catch(err => {
             res.send(err);
