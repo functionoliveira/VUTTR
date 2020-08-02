@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tools.associate = function(models) {
     // associations can be defined here
+    Tools.hasMany(models.Tags, {foreignKey: 'toolsID', as: 'tags'})
   };
   return Tools;
 };
