@@ -3,16 +3,25 @@ const { Sequelize, Op } = require('sequelize');
 
 class ToolsService {
     static list() {
-        return Tools.findAll();
+        return Tools.findAll({include: {model: Tags, as: 'tags', attributes: ["name"]},});
     }
 
-    static search(query) {
-        let dbQuery = query.q ? { title : { [Op.iLike]: `%${query.q}%` } } : {};
+    static searchByTitle(title_like) {
+        let dbQuery = { title : { [Op.iLike]: `%${title_like}%` } };
         return Tools.findAll({
-            attributes: { exclude: ['createdAt', 'updatedAt', "tags.id"] },
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
             include: {model: Tags, as: 'tags', attributes: ["name"]},
             where: dbQuery
         });
+    }
+
+    static searchByTags(tags_like) {
+        let dbQuery = { "$tags.name$" : { [Op.iLike]: `%${tags_like}%` } };
+        return Tools.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            include: {model: Tags, as: 'tags', attributes: ["name"]},
+            where: dbQuery
+        });   
     }
 
     static create(tools) {

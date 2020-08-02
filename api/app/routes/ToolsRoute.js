@@ -4,13 +4,22 @@ const ToolsRouter = express.Router();
 
 // Rota para listar ferramentas filtrando pela query string
 ToolsRouter.get('/', function(req, res) {
-    ToolsService.search(req.query)
-        .then(tools => {
-            res.send(tools);
-        })
-        .catch(err => {
-            res.send("erro " + err);
-        });
+    let promise;
+    
+    if(req.query.q){
+        promise = ToolsService.searchByTitle(req.query.q);
+    }else if(req.query.tags_like) {
+        promise = ToolsService.searchByTags(req.query.tags_like);
+    }else{
+        promise = ToolsService.list();
+    }
+
+    promise.then(tools => {
+        res.send(tools);
+    })
+    .catch(err => {
+        res.send("erro " + err);
+    });
 });
 
 // Rota para recuperar uma ferramenta

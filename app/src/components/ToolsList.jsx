@@ -47,7 +47,6 @@ class ToolsList extends React.Component {
             .search(query)
             .then(resp => {
                 this.props.initToolsList(resp.data);
-                console.log(resp);
             })
             .catch(err => {
                 console.log(err);
