@@ -46,7 +46,7 @@ class ToolsList extends React.Component {
         instanceToolsAPI
             .search(query)
             .then(resp => {
-                this.setState({...this.state, tools: resp.data});
+                this.props.initToolsList(resp.data);
                 console.log(resp);
             })
             .catch(err => {
